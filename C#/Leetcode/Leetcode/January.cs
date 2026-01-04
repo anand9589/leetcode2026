@@ -1,7 +1,4 @@
-﻿
-using System.Text;
-
-namespace Leetcode
+﻿namespace Leetcode
 {
     public class January
     {
@@ -125,17 +122,59 @@ namespace Leetcode
                 if (i == p1) continue;
                 for (int j = 0; j < 3; j++)
                 {
-                    if(i==j || j==p2) continue;
+                    if (i == j || j == p2) continue;
                     for (int k = 0; k < 3; k++)
                     {
-                        if(j==k || k==p3) continue;
+                        if (j == k || k == p3) continue;
 
                         result = (result + solve(n, index + 1, i, j, k, dp)) % MOD;
                     }
                 }
             }
 
-            return dp[index][p1 + 1][p2 + 1][p3+1] = result;
+            return dp[index][p1 + 1][p2 + 1][p3 + 1] = result;
+        }
+        #endregion
+
+        #region 4 --> 1390. Four Divisors
+        public int SumFourDivisors(int[] nums)
+        {
+            int result = 0;
+            Dictionary<int, int> map = new Dictionary<int, int>();
+
+            foreach (int n in nums)
+            {
+                if (!map.ContainsKey(n))
+                {
+                    map[n] = GetDivisorsSum(n);
+                }
+                result += map[n];
+            }
+
+            return result;
+        }
+
+        private int GetDivisorsSum(int n)
+        {
+            if (n <= 7) return 0;
+            int i = 2;
+            while (n % i != 0)
+            {
+                i++;
+            }
+
+
+            int n2 = i, n3 = n / i;
+
+            if (n2 == n || n2 == n3) return 0;
+
+            for (i = n2 + 1; i < n3; i++)
+            {
+                if (n % i == 0) return 0;
+            }
+
+            return 1 + n + n2 + n3;
+
         }
         #endregion
     }

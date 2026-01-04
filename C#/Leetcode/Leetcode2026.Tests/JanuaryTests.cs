@@ -19,6 +19,17 @@ namespace Leetcode2026.Tests
             Assert.Pass();
         }
 
+        #region 4 --> 1390. Four Divisors
+
+
+        [Test]
+        public void SumFourDivisorsTest1()
+        {
+            var k = january.SumFourDivisors(new int[] { 21, 4, 7 });
+            Assert.That(k.Equals(32));
+        }
+        #endregion
+
         #region 3 --> 1411. Number of Ways to Paint N × 3 Grid
 
 
