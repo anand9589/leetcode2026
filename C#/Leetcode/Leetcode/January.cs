@@ -42,7 +42,7 @@
 
         #region 3 --> 1411. Number of Ways to Paint N × 3 Grid
         int nWays1411_1 = 0;
-        int[][] nWaysGrid1411_1 = null;
+        int[][] nWaysGrid1411_1 = new int[0][];
         public int NumOfWays_1(int n)
         {
             nWaysGrid1411_1 = new int[n][];
@@ -180,6 +180,38 @@
 
         #region 5 --> 1975. Maximum Matrix Sum
         public long MaxMatrixSum(int[][] matrix)
+        {
+            long result = 0;
+
+            bool odd = false;
+            int se = int.MaxValue;
+            foreach (int[] row in matrix)
+            {
+                foreach (int n in row)
+                {
+                    int c = n;
+                    if (n < 0)
+                    {
+                        odd = !odd;
+                        c = Math.Abs(c);
+                    }
+
+                    if (se > c)
+                    {
+                        se = c;
+                    }
+                    result += c;
+                }
+            }
+
+            if (odd)
+            {
+                result -= (2 * se);
+            }
+
+            return result;
+        }
+        public long MaxMatrixSum1(int[][] matrix)
         {
             long result = 0;
 
