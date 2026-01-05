@@ -177,5 +177,40 @@
 
         }
         #endregion
+
+        #region 5 --> 1975. Maximum Matrix Sum
+        public long MaxMatrixSum(int[][] matrix)
+        {
+            long result = 0;    
+
+            bool odd = false;
+            int negSmall = int.MaxValue;
+            for (int i = 0;i<matrix.Length;i++)
+            {
+                for (int j = 0;j < matrix[i].Length;j++)
+                {
+                    if(matrix[i][j] < 0)
+                    {
+                        if (matrix[i][j] < negSmall)
+                        {
+                            negSmall = matrix[i][j];
+                        }
+                        result += (matrix[i][j] * -1);
+                        odd = !odd;
+                    }
+                    else
+                    {
+                        result += matrix[i][j];
+                    }
+                }
+            }
+
+            if (odd) { 
+                result -= (2  * negSmall);
+            }
+
+            return result;
+        }
+        #endregion
     }
 }
