@@ -1,3 +1,4 @@
+using Common;
 using Leetcode;
 
 namespace Leetcode2026.Tests
@@ -18,6 +19,38 @@ namespace Leetcode2026.Tests
 
             Assert.Pass();
         }
+
+
+        #region 5 --> 1975. Maximum Matrix Sum
+
+        [Test]
+        public void MaxMatrixSumTest1()
+        {
+            string s = "[[1,2,3],[-1,-2,-3],[1,2,3]]";
+            int[][] matrix = Helper.GetMultiDimensionalArrayBasedOnString(s);
+            var k = january.MaxMatrixSum(matrix);
+            Assert.That(k, Is.EqualTo(16));
+        }
+
+        [Test]
+        public void MaxMatrixSumTest2()
+        {
+            string s = "[[-1,0,-1],[-2,1,3],[3,2,2]]";
+            int[][] matrix = Helper.GetMultiDimensionalArrayBasedOnString(s);
+            var k = january.MaxMatrixSum(matrix);
+            Assert.That(k, Is.EqualTo(15));
+        }
+
+        [Test]
+        public void MaxMatrixSumTest3()
+        {
+            string s = "[[2,9,3],[5,4,-4],[1,7,1]]";
+            int[][] matrix = Helper.GetMultiDimensionalArrayBasedOnString(s);
+            var k = january.MaxMatrixSum(matrix);
+            Assert.That(k, Is.EqualTo(34));
+        }
+
+        #endregion
 
         #region 4 --> 1390. Four Divisors
 
