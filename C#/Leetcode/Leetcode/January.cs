@@ -1,4 +1,6 @@
-﻿namespace Leetcode
+﻿using Common;
+
+namespace Leetcode
 {
     public class January
     {
@@ -241,6 +243,53 @@
             }
 
             return result;
+        }
+        #endregion
+
+        #region 6 --> 1161. Maximum Level Sum of a Binary Tree
+        public int MaxLevelSum(TreeNode root)
+        {
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+
+            int currLevel = 0;
+            int result = 0;
+            int resultSum = root.val;
+            if (root.left != null)
+            {
+                queue.Enqueue(root.left);
+            }
+            if (root.right != null)
+            {
+                queue.Enqueue(root.right);
+            }
+
+            while (queue.Count > 0)
+            {
+                currLevel++;
+                int currSum = 0;
+                int k = queue.Count;
+
+                while (k-- > 0)
+                {
+                    var currNode = queue.Dequeue();
+                    currSum += currNode.val;
+                    if (currNode.left != null)
+                    {
+                        queue.Enqueue(currNode.left);
+                    }
+                    if (currNode.right != null)
+                    {
+                        queue.Enqueue(currNode.right);
+                    }
+                }
+
+                if (currSum > resultSum)
+                {
+                    resultSum = currSum;
+                    result = currLevel;
+                }
+            }
+            return result + 1;
         }
         #endregion
     }
