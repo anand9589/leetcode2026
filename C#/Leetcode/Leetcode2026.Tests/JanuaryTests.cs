@@ -20,6 +20,20 @@ namespace Leetcode2026.Tests
             Assert.Pass();
         }
 
+        #region 6 --> 1161. Maximum Level Sum of a Binary Tree
+
+        [Test]
+        public void MaxLevelSumTest1()
+        {
+            TreeNode treeNode = new TreeNode(1,
+                new TreeNode(7,
+                    new TreeNode(8), new TreeNode(-7))
+                , new TreeNode(0));
+
+            var k = january.MaxLevelSum(treeNode);
+            Assert.That(k, Is.EqualTo(2));
+        }
+        #endregion
 
         #region 5 --> 1975. Maximum Matrix Sum
 
@@ -69,7 +83,7 @@ namespace Leetcode2026.Tests
         [Test]
         public void NumOfWaysTest1()
         {
-            int k =  january.NumOfWays(1);
+            int k = january.NumOfWays(1);
             Assert.That(k.Equals(12));
         }
 
@@ -77,7 +91,7 @@ namespace Leetcode2026.Tests
         [Test]
         public void NumOfWaysTest2()
         {
-            
+
             int k = january.NumOfWays(2);
             Assert.That(k.Equals(54));
 
