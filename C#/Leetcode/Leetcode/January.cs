@@ -292,5 +292,114 @@ namespace Leetcode
             return result + 1;
         }
         #endregion
+
+        #region 7 --> 1339. Maximum Product of Splitted Binary Tree
+        long totalSum = 0;
+        long maxProduct = 0;
+        public int MaxProduct(TreeNode root)
+        {
+            totalSum = calculateTreeNodeSum(root);
+            maxProductFromSubTree(root);
+            return (int)(maxProduct % MOD);
+        }
+
+        private long maxProductFromSubTree(TreeNode root)
+        {
+            if (root == null) return 0;
+
+            long currSum = root.val + maxProductFromSubTree(root.left) + maxProductFromSubTree(root.right);
+
+            if (currSum < totalSum)
+            {
+                long currProduct = currSum * (totalSum - currSum);
+
+                maxProduct = Math.Max(maxProduct, currProduct);
+            }
+
+            return currSum;
+        }
+
+        private long calculateTreeNodeSum(TreeNode root)
+        {
+            if (root == null) return 0;
+
+            return root.val + calculateTreeNodeSum(root.left) + calculateTreeNodeSum(root.right);
+        }
+
+        Dictionary<TreeNode, long> subtreeMapSum = new Dictionary<TreeNode, long>();
+        public int MaxProduct2(TreeNode root)
+        {
+            totalSum = calculateTreeNodeSum2(root);
+            getMaxProduct2(root);
+            return (int)(maxProduct % MOD);
+        }
+
+        private void getMaxProduct2(TreeNode root)
+        {
+            if (root != null)
+            {
+
+                long currentSubTreeSum = subtreeMapSum[root];
+
+                if (currentSubTreeSum < totalSum)
+                {
+                    long currProduct = currentSubTreeSum * (totalSum - currentSubTreeSum);
+
+                    maxProduct = Math.Max(maxProduct, currProduct);
+                }
+
+                getMaxProduct2(root.left);
+                getMaxProduct2(root.right);
+            }
+        }
+
+        private long calculateTreeNodeSum2(TreeNode root)
+        {
+            if (root == null) return 0;
+
+            subtreeMapSum[root] = root.val + calculateTreeNodeSum2(root.left) + calculateTreeNodeSum2(root.right);
+
+            return subtreeMapSum[root];
+        }
+
+        //public int MaxProduct1(TreeNode root)
+        //{
+        //    int result = 0;
+
+        //    calculateTreeNodeSum1(root, map);
+        //    long sum = map[root];
+        //    foreach (TreeNode node in map.Keys)
+        //    {
+        //        long currTreeNodeSum = map[node];
+
+        //        long n2 = sum - currTreeNodeSum;
+
+        //        int currResult = (int)((currTreeNodeSum * n2) % MOD);
+
+        //        result = Math.Max(result, currResult);
+        //    }
+
+        //    return result;
+        //}
+
+        //private void calculateTreeNodeSum1(TreeNode root, Dictionary<TreeNode, long> map)
+        //{
+        //    if (root != null)
+        //    {
+        //        map[root] = root.val;
+
+        //        if (root.left != null)
+        //        {
+        //            calculateTreeNodeSum1(root.left, map);
+        //            map[root] += map[root.left];
+        //        }
+        //        if (root.right != null)
+        //        {
+        //            calculateTreeNodeSum1(root.right, map);
+        //            map[root] += map[root.right];
+        //        }
+        //    }
+        //}
+        #endregion
     }
 }
