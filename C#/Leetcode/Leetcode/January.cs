@@ -401,5 +401,32 @@ namespace Leetcode
         //    }
         //}
         #endregion
+
+        #region 8 --> 1458. Max Dot Product of Two Subsequences
+        public int MaxDotProduct(int[] nums1, int[] nums2)
+        {
+            int m = nums1.Length;
+            int n = nums2.Length;
+            int[][] dp = new int[m+1][];
+            for (int i = 0; i <= m; i++) {
+                dp[i] = new int[n + 1];
+                for (int j   = 0; j <= n; j++)
+                {
+                    dp[i][j] = int.MinValue;
+                }
+            }
+
+            for (int i = 1; i <= m; i++)
+            {
+                for (int j = 1; j <= n; j++)
+                {
+                    int prod = nums1[i - 1] * nums2[j - 1] + Math.Max(0, dp[i - 1][j-1]);
+
+                    dp[i][j] = Math.Max(prod, Math.Max(dp[i - 1][j], dp[i][j - 1]));
+                }
+            }
+            return dp[m][n];
+        }
+        #endregion
     }
 }

@@ -21,6 +21,20 @@ namespace Leetcode2026.Tests
 
         }
 
+
+        #region 8 --> 1458. Max Dot Product of Two Subsequences
+
+        [Test]
+        public void MaxDotProductTest1()
+        {
+            int[] num1 = { 2, 1, -2, 5 };
+            int[] num2 = { 3, 0, -6 };
+            
+            var k = january.MaxDotProduct(num1, num2);
+            Assert.That(k, Is.EqualTo(18));
+        }
+
+        #endregion
         #region 7 --> 1339. Maximum Product of Splitted Binary Tree
 
         [Test]
