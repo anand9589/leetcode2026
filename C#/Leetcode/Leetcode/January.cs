@@ -4,6 +4,8 @@ namespace Leetcode
 {
     public class January
     {
+        #region x -->
+        #endregion
         private const int MOD = 1000_000_007;
         #region 1 --> 66. Plus One
         public int[] PlusOne(int[] digits)
@@ -407,10 +409,40 @@ namespace Leetcode
         {
             int m = nums1.Length;
             int n = nums2.Length;
-            int[][] dp = new int[m+1][];
-            for (int i = 0; i <= m; i++) {
+            int[] dp = new int[n + 1];
+
+            for (int i = 0; i <= n; i++)
+            {
+                dp[i] = int.MinValue;
+            }
+
+            for (int i = 1; i <= m; i++)
+            {
+                int last = int.MinValue;
+
+                for (int j = 1; j <= n; j++)
+                {
+                    int old = dp[j];
+
+                    int prod = nums1[i - 1] * nums2[j - 1] + Math.Max(0, last);
+
+                    dp[j] = Math.Max(prod, Math.Max(dp[j], dp[j - 1]));
+
+                    last = old;
+                }
+            }
+
+            return dp[n];
+        }
+        public int MaxDotProduct1(int[] nums1, int[] nums2)
+        {
+            int m = nums1.Length;
+            int n = nums2.Length;
+            int[][] dp = new int[m + 1][];
+            for (int i = 0; i <= m; i++)
+            {
                 dp[i] = new int[n + 1];
-                for (int j   = 0; j <= n; j++)
+                for (int j = 0; j <= n; j++)
                 {
                     dp[i][j] = int.MinValue;
                 }
@@ -420,12 +452,155 @@ namespace Leetcode
             {
                 for (int j = 1; j <= n; j++)
                 {
-                    int prod = nums1[i - 1] * nums2[j - 1] + Math.Max(0, dp[i - 1][j-1]);
+                    int prod = nums1[i - 1] * nums2[j - 1] + Math.Max(0, dp[i - 1][j - 1]);
 
                     dp[i][j] = Math.Max(prod, Math.Max(dp[i - 1][j], dp[i][j - 1]));
                 }
             }
             return dp[m][n];
+        }
+        #endregion
+
+        #region 9 --> 865. Smallest Subtree with all the Deepest Nodes
+
+        /**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+            public TreeNode SubtreeWithAllDeepest(TreeNode root)
+            {
+                return GetDeepest(root, 0).node;
+            }
+
+            private (TreeNode node, int deep) GetDeepest(TreeNode node, int deep)
+            {
+                if (node == null) return (node, 0);
+
+                (var leftNode, var leftDeep) = GetDeepest(node.left, deep + 1);
+                (var rightNode, var rightDeep) = GetDeepest(node.right, deep + 1);
+
+                if (leftDeep > rightDeep) return (leftNode, leftDeep + 1);
+                else if (leftDeep < rightDeep) return (rightNode, rightDeep + 1);
+                else
+                    return (node, leftDeep + 1);
+            }
+ */
+
+        public TreeNode SubtreeWithAllDeepest(TreeNode root)
+        {
+            return SubtreeWithAllDeepestHelper(root, 0).node;
+        }
+
+        private (TreeNode node, int level) SubtreeWithAllDeepestHelper(TreeNode root, int currLevel)
+        {
+
+            if (root == null) return (root, 0);
+
+            (TreeNode leftNode, int leftLevel) = SubtreeWithAllDeepestHelper(root.left, currLevel + 1);
+            (TreeNode rightNode, int rightLevel) = SubtreeWithAllDeepestHelper(root.right, currLevel + 1);
+
+            if (leftLevel > rightLevel) return (leftNode, leftLevel + 1);
+            if (rightLevel > leftLevel) return (rightNode, rightLevel + 1);
+
+            return (root, currLevel);
+
+        }
+
+        public TreeNode getSmallestNode(TreeNode node1, TreeNode node2)
+        {
+            if (node1.val < node2.val) return node1;
+            return node2;
+        }
+        #endregion
+
+        #region 10 --> 712. Minimum ASCII Delete Sum for Two Strings
+
+        public int MinimumDeleteSum(string s1, string s2)
+        {
+            int m = s1.Length;
+            int n = s2.Length;
+
+            int[] dp = new int[n + 1];
+
+            for (int j = 1; j <= n; j++)
+            {
+                dp[j] = dp[j - 1] + s2[j - 1];
+            }
+
+            for (int i = 1; i <= m; i++)
+            {
+                int prevDiag = dp[0];
+                dp[0] += s1[i - 1];
+
+                for (int j = 1; j <= n; j++)
+                {
+                    int temp = dp[j];
+
+                    if (s1[i - 1] == s2[j - 1])
+                    {
+                        dp[j] = prevDiag;
+                    }
+                    else
+                    {
+                        dp[j] = Math.Min(
+                            dp[j] + s1[i - 1],
+                            dp[j - 1] + s2[j - 1]
+                        );
+                    }
+
+                    prevDiag = temp;
+                }
+            }
+
+            return dp[n];
+        }
+
+        public int MinimumDeleteSum1(string s1, string s2)
+        {
+            int s1Len = s1.Length;
+            int s2Len = s2.Length;
+
+            int[][] dp = new int[s1Len + 1][];
+            for (int i = 0; i <= s1Len; i++)
+            {
+                dp[i] = new int[s2Len + 1];
+                if (i == 0)
+                {
+                    for (int j = 1; j <= s2Len; j++)
+                    {
+                        dp[i][j] = dp[i][j - 1] + s2[j - 1];
+                    }
+                }
+                else
+                {
+                    dp[i][0] = dp[i - 1][0] + s1[i - 1];
+                }
+            }
+
+            for (int i = 1; i <= s1Len; i++)
+            {
+                for (int j = 1; j <= s2Len; j++)
+                {
+                    if (s1[i - 1] == s2[j - 1])
+                    {
+                        dp[i][j] = dp[i - 1][j - 1];
+                    }
+                    else
+                    {
+                        dp[i][j] = Math.Min(dp[i - 1][j] + s1[i - 1], dp[i][j - 1] + s2[j - 1]);
+                    }
+                }
+            }
+
+            return dp[s1Len][s2Len];
         }
         #endregion
     }

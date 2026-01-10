@@ -20,7 +20,58 @@ namespace Leetcode2026.Tests
             TreeNode treeNode = Helper.GetTreeNode(s);
 
         }
+        #region 10 --> 712. Minimum ASCII Delete Sum for Two Strings
 
+        [Test]
+        public void MinimumDeleteSumTest1()
+        {
+            string s1 = "sea";
+            string s2 = "eat";
+
+            var k = january.MinimumDeleteSum(s1, s2);
+
+            Assert.That(231, Is.EqualTo(k));
+
+        }
+
+        [Test]
+        public void MinimumDeleteSumTest2()
+        {
+            string s1 = "delete";
+            string s2 = "leet";
+
+            var k = january.MinimumDeleteSum(s1, s2);
+
+            Assert.That(403, Is.EqualTo(k));
+
+        }
+
+        #endregion
+
+        #region 9 --> 865. Smallest Subtree with all the Deepest Nodes
+        [Test]
+        public void SubtreeWithAllDeepestTest1()
+        {
+            string s = "[3,5,1,6,2,0,8,null,null,7,4]";
+            TreeNode treeNode = Helper.GetTreeNode(s);
+            string expected1 = "[2,7,4]";
+
+            TreeNode expected = Helper.GetTreeNode(expected1);
+            var k = january.SubtreeWithAllDeepest(treeNode);
+            Assert.That(expected.IsEqualTreeNode(k), Is.EqualTo(true));
+        }
+        [Test]
+        public void SubtreeWithAllDeepestTest2()
+        {
+            string s = "[0,1,3,null,2]";
+            TreeNode treeNode = Helper.GetTreeNode(s);
+            string expected1 = "[2]";
+
+            TreeNode expected = Helper.GetTreeNode(expected1);
+            var k = january.SubtreeWithAllDeepest(treeNode);
+            Assert.That(expected.IsEqualTreeNode(k), Is.EqualTo(true));
+        }
+        #endregion
 
         #region 8 --> 1458. Max Dot Product of Two Subsequences
 
