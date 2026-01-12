@@ -603,5 +603,81 @@ namespace Leetcode
             return dp[s1Len][s2Len];
         }
         #endregion
+
+        #region 12 --> 1266. Minimum Time Visiting All Points
+        public int MinTimeToVisitAllPoints(int[][] points)
+        {
+            int time = 0;
+            int startX = points[0][0];
+            int startY = points[0][1];
+
+            for (int i = 1; i < points.Length; i++)
+            {
+                int diffX = Math.Abs(points[i][0] - startX);
+                int diffY = Math.Abs(points[i][1] - startY);
+
+
+                time += Math.Max(diffX, diffY);
+                startX = points[i][0];
+                startY = points[i][1];
+            }
+
+            return time;
+        }
+        #endregion
+        #region playground
+        public static NakedGroup GroupElements(List<int[]> arrays)
+        {
+            // Example: n arrays with unique elements per array
+
+
+            // Try to find groups of size X (from 2 up to n-1)
+            for (int x = 2; x < arrays.Count; x++)
+            {
+                var result = FindNakedGroup(arrays, x);
+                if (result != null)
+                {
+                    return result;
+                    //Console.WriteLine($"Found a group of {x} arrays sharing elements: {string.Join(", ", result.Elements)}");
+                    //Console.WriteLine($"Array Indices in group: {string.Join(", ", result.Indices)}");
+                    //break;
+                }
+            }
+            return null;
+        }
+        public static NakedGroup FindNakedGroup(List<int[]> source, int groupSize)
+        {
+            var indices = Enumerable.Range(0, source.Count).ToList();
+
+            // Check all combinations of 'groupSize' arrays
+            foreach (var combo in GetCombinations(indices, groupSize))
+            {
+                // The key logic: Union all elements in this specific combination
+                var union = combo.SelectMany(idx => source[idx]).Distinct().ToArray();
+
+                // If Count of unique elements == Count of arrays, it's a naked group
+                if (union.Length == groupSize)
+                {
+                    return new NakedGroup { Indices = combo.ToArray(), Elements = union };
+                }
+            }
+            return null;
+        }
+
+
+        // Helper to generate combinations
+        static IEnumerable<IEnumerable<T>> GetCombinations<T>(IEnumerable<T> list, int length)
+        {
+            if (length == 1) return list.Select(t => new T[] { t });
+            return list.SelectMany((t, i) =>
+                GetCombinations(list.Skip(i + 1), length - 1).Select(c => (new T[] { t }).Concat(c)));
+        }
+
+        public class NakedGroup
+        {
+            public int[] Indices { get; set; }
+            public int[] Elements { get; set; }
+        }
+        #endregion
     }
 }

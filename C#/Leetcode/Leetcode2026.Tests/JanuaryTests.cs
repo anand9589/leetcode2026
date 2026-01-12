@@ -16,8 +16,21 @@ namespace Leetcode2026.Tests
         [Test]
         public void Test1()
         {
-            string s = "[1,null,2,3,4,null,null,5,6]";
-            TreeNode treeNode = Helper.GetTreeNode(s);
+            
+
+        }
+
+        [Test]
+        public void Test2()
+        {
+            int[] arr2 = { 4, 8, 9 };
+            int[] arr3 = { 4, 5, 8, 9 };
+            int[] arr4 = { 2, 3, 4 };
+            int[] arr6 = { 2, 4 };
+            int[] arr8 = { 3, 4 };
+            int[] arr9 = { 2, 3, 4, 5 };
+            List<int[]> arrays = new List<int[]> {  arr2, arr3, arr4,  arr6,  arr8, arr9 };
+            January.GroupElements(arrays);
 
         }
         #region 10 --> 712. Minimum ASCII Delete Sum for Two Strings
@@ -80,7 +93,7 @@ namespace Leetcode2026.Tests
         {
             int[] num1 = { 2, 1, -2, 5 };
             int[] num2 = { 3, 0, -6 };
-            
+
             var k = january.MaxDotProduct(num1, num2);
             Assert.That(k, Is.EqualTo(18));
         }
