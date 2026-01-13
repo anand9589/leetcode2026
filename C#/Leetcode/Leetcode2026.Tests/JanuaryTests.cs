@@ -33,6 +33,50 @@ namespace Leetcode2026.Tests
             January.GroupElements(arrays);
 
         }
+
+
+        #region 13 --> 3453. Separate Squares I
+
+        [Test]
+        public void SeparateSquaresTest1()
+        {
+            int[][] squares = Helper.GetMultiDimensionalArrayBasedOnString("[[0,0,1],[2,2,1]]");
+
+            var k = january.SeparateSquares(squares);
+
+            Assert.That(k, Is.EqualTo(1.00000));
+        }
+
+        [Test]
+        public void SeparateSquaresTest2()
+        {
+            int[][] squares = Helper.GetMultiDimensionalArrayBasedOnString("[[0,0,2],[1,1,1]]");
+
+            var k = january.SeparateSquares(squares);
+
+            Assert.That(k, Is.EqualTo(1.16667));
+        }
+
+        [Test]
+        public void SeparateSquaresTest3()
+        {
+            int[][] squares = Helper.GetMultiDimensionalArrayBasedOnString("[[26,28,2],[16,23,2]]");
+
+            var k = january.SeparateSquares(squares);
+
+            Assert.That(k, Is.EqualTo(25.00000));
+        }
+
+        [Test]
+        public void SeparateSquaresTest4()
+        {
+            int[][] squares = Helper.GetMultiDimensionalArrayBasedOnString("[[522261215,954313664,225462],[628661372,718610752,10667],[619734768,941310679,44788],[352367502,656774918,289036],[860247066,905800565,100123],[817623994,962847576,71460],[691552058,782740602,36271],[911356,152015365,513881],[462847044,859151855,233567],[672324240,954509294,685569]]");
+
+            var k = january.SeparateSquares(squares);
+
+            Assert.That(k, Is.EqualTo(954521423.80202));
+        }
+        #endregion
         #region 10 --> 712. Minimum ASCII Delete Sum for Two Strings
 
         [Test]

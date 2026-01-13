@@ -625,6 +625,60 @@ namespace Leetcode
             return time;
         }
         #endregion
+
+
+        #region 13 --> 3453. Separate Squares I
+        public double SeparateSquares(int[][] squares)
+        {
+            double result = 0.0;
+
+            double totalArea = 0.0;
+            double low = int.MaxValue, high = 0.0;
+            foreach (int[] square in squares)
+            {
+                low = Math.Min(square[1], low);
+                high = Math.Max(square[1] + square[2], high);
+
+                totalArea += ((double)square[2] * (double)square[2]);
+            }
+
+            double halfArea = (double)(totalArea / 2);
+
+            while (low < high)
+            {
+                double mid = (low + high) / 2;
+
+                double currentArea = 0.0;
+                foreach (int[] square in squares)
+                {
+
+                    if (square[1] >= mid) continue;
+                    int y1 = square[1];
+                    double y2 = y1 + square[2];
+                    if (y2 > mid)
+                    {
+                        y2 = mid;
+                    }
+
+                    currentArea += ((double)square[2] * (double)(y2 - y1));
+
+                    if (currentArea >= halfArea) break;
+                }
+
+                if (currentArea < halfArea)
+                {
+                    low = Math.Round(mid + 0.000001, 5);
+                }
+                else
+                {
+                    high = Math.Round(mid - 0.000001, 5);
+                }
+            }
+
+            return low;
+        }
+        #endregion
+
         #region playground
         public static NakedGroup GroupElements(List<int[]> arrays)
         {
