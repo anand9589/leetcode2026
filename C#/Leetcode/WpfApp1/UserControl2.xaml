@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="WpfApp1.UserControl2"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApp1"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="150">
+    <UserControl.Resources>
+        <Style TargetType="local:UserControl1">
+            <Setter Property="Margin" Value="0"></Setter>
+            <Setter Property="Padding" Value="0"></Setter>
+        </Style>
+    </UserControl.Resources>
+    <Border BorderBrush="Black" BorderThickness="2">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <local:UserControl1 Grid.Row="0" Grid.Column="0" TextChanged="UserControl1_TextChanged" CollectionChanged="UserControl1_CollectionChanged" UCROW="0" UCCOL="0"></local:UserControl1>
+            <local:UserControl1 Grid.Row="0" Grid.Column="1"  UCROW="0" UCCOL="1" CollectionChanged="UserControl1_CollectionChanged"   TextChanged="UserControl1_TextChanged" ></local:UserControl1>
+            <local:UserControl1 Grid.Row="0" Grid.Column="2"  UCROW="0" UCCOL="2" CollectionChanged="UserControl1_CollectionChanged"   TextChanged="UserControl1_TextChanged"></local:UserControl1>
+            <local:UserControl1 Grid.Row="1" Grid.Column="0"  UCROW="1" UCCOL="0" CollectionChanged="UserControl1_CollectionChanged"   TextChanged="UserControl1_TextChanged"></local:UserControl1>
+            <local:UserControl1  Grid.Row="1" Grid.Column="1"  UCROW="1" UCCOL="1"  CollectionChanged="UserControl1_CollectionChanged"  TextChanged="UserControl1_TextChanged"></local:UserControl1>
+            <local:UserControl1  Grid.Row="1" Grid.Column="2"  UCROW="1" UCCOL="2" CollectionChanged="UserControl1_CollectionChanged"   TextChanged="UserControl1_TextChanged"></local:UserControl1>
+            <local:UserControl1  Grid.Row="2" Grid.Column="0"  UCROW="2" UCCOL="0"  CollectionChanged="UserControl1_CollectionChanged"   TextChanged="UserControl1_TextChanged"></local:UserControl1>
+            <local:UserControl1  Grid.Row="2" Grid.Column="1"  UCROW="2" UCCOL="1"  CollectionChanged="UserControl1_CollectionChanged"  TextChanged="UserControl1_TextChanged"></local:UserControl1>
+            <local:UserControl1  Grid.Row="2" Grid.Column="2"  UCROW="2" UCCOL="2" CollectionChanged="UserControl1_CollectionChanged"   TextChanged="UserControl1_TextChanged"></local:UserControl1>
+        </Grid>
+    </Border>
+</UserControl>

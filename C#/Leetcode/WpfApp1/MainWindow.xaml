@@ -1,0 +1,34 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="700" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <local:UserControl2 Block="1" TextChanged="UserControl2_TextChanged" CollectionChanged="UserControl2_CollectionChanged"></local:UserControl2>
+        <local:UserControl2 Grid.Column="1"  Block="2" TextChanged="UserControl2_TextChanged" CollectionChanged="UserControl2_CollectionChanged"></local:UserControl2>
+        <local:UserControl2 Grid.Column="2"  Block="3" TextChanged="UserControl2_TextChanged" CollectionChanged="UserControl2_CollectionChanged"></local:UserControl2>
+        <local:UserControl2 Grid.Row="1"  Block="4" TextChanged="UserControl2_TextChanged" CollectionChanged="UserControl2_CollectionChanged"></local:UserControl2>
+        <local:UserControl2 Grid.Row="1"  Grid.Column="1"  Block="5"  TextChanged="UserControl2_TextChanged" CollectionChanged="UserControl2_CollectionChanged"></local:UserControl2>
+        <local:UserControl2 Grid.Row="1"  Grid.Column="2"  Block="6"  TextChanged="UserControl2_TextChanged" CollectionChanged="UserControl2_CollectionChanged"></local:UserControl2>
+        <local:UserControl2 Grid.Row="2"  Block="7"  TextChanged="UserControl2_TextChanged" CollectionChanged="UserControl2_CollectionChanged"></local:UserControl2>
+        <local:UserControl2 Grid.Row="2"  Grid.Column="1"  Block="8"  TextChanged="UserControl2_TextChanged" CollectionChanged="UserControl2_CollectionChanged"></local:UserControl2>
+        <local:UserControl2 Grid.Row="2"  Grid.Column="2"  Block="9" TextChanged="UserControl2_TextChanged" CollectionChanged="UserControl2_CollectionChanged"></local:UserControl2>
+        <Button Grid.Row="3" Click="Button_Click">1</Button>
+        <Button  Grid.Row="3" Grid.Column="1" Click="Button_Click_1">1</Button>
+        <Button  Grid.Row="3" Grid.Column="2">1</Button>
+    </Grid>
+</Window>

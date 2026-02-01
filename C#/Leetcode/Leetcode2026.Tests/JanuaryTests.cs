@@ -1,5 +1,6 @@
 using Common;
 using Leetcode;
+using System.Threading.Channels;
 
 namespace Leetcode2026.Tests
 {
@@ -12,27 +13,94 @@ namespace Leetcode2026.Tests
         {
             january = new January();
         }
-
+        
         [Test]
-        public void Test1()
+        public void Test()
         {
-            
 
         }
+
+        #region 2976. Minimum Cost to Convert String I
+        [Test]
+        public void MinimumCostTest()
+        {
+            string source = "abcd", target = "acbe";
+            char[] original = new char[] { 'a', 'b', 'c', 'c', 'e', 'd' }, changed = new char[] { 'b', 'c', 'b', 'e', 'b', 'e' };
+            int[] cost = { 2, 5, 5, 1, 2, 20 };
+
+            var k = january.MinimumCost(source, target, original, changed, cost);
+            Assert.That(k, Is.EqualTo(28));
+        }
+        #endregion
+
+        [Test]
+        public void MaximizeSquareAreaTest1()
+        {
+            int[] a = new int[] { 5, 2, 3, 1 };
+            var k = january.MinimumPairRemoval(a);
+
+        }
+
+
+
 
         [Test]
         public void Test2()
         {
             int[] arr2 = { 4, 8, 9 };
-            int[] arr3 = { 4, 5, 8, 9 };
+            int[] arr3 = { 4, 5, 8, 9, 11, 12, 13, 14, 15, 16, 17, 3, 21, 23, 22 };
             int[] arr4 = { 2, 3, 4 };
             int[] arr6 = { 2, 4 };
             int[] arr8 = { 3, 4 };
             int[] arr9 = { 2, 3, 4, 5 };
-            List<int[]> arrays = new List<int[]> {  arr2, arr3, arr4,  arr6,  arr8, arr9 };
-            January.GroupElements(arrays);
+            //List<int[]> arrays = new List<int[]> {  arr2, arr3, arr4,  arr6,  arr8, arr9 };
+            //January.GroupElements(arrays);
+            var k = january.GetConsecutiveSequence(arr3);
+            Assert.That(k, Is.EqualTo(7));
+        }
+
+
+        #region 18 --> 1895. Largest Magic Square
+
+        [Test]
+        public void LargestMagicSquareTest1()
+        {
+            int[][] arr = Helper.GetMultiDimensionalArrayBasedOnString("[[7,1,4,5,6],[2,5,1,6,4],[1,5,4,3,2],[1,2,7,3,4]]");
+
+            //var k = january.LargestMagicSquare(arr);
+
+            //Assert.That(k, Is.EqualTo(3));
 
         }
+        #endregion
+        #region 16 --> 2975. Maximum Square Area by Removing Fences From a Field
+        [Test]
+        public void Test1()
+        {
+
+
+        }
+        #endregion
+
+        #region 14 --> 3454. Separate Squares II
+
+
+        [Test]
+        public void SeparateSquaresTest5()
+        {
+            int[][] squares = new int[][]{
+                new int[] { 1,2,4 },
+                new int[] { 2,6,3 },
+                new int[] { 5,4,5 },
+                new int[] { 2,1,5 },
+                new int[] { 9,11,4 },
+                new int[] { 3,11,3 },
+                new int[] { 10,3,7 }
+            };
+
+            var k = january.SeparateSquares(squares);
+        }
+        #endregion
 
 
         #region 13 --> 3453. Separate Squares I
@@ -42,7 +110,7 @@ namespace Leetcode2026.Tests
         {
             int[][] squares = Helper.GetMultiDimensionalArrayBasedOnString("[[0,0,1],[2,2,1]]");
 
-            var k = january.SeparateSquares(squares);
+            var k = january.SeparateSquaresI(squares);
 
             Assert.That(k, Is.EqualTo(1.00000));
         }
@@ -52,7 +120,7 @@ namespace Leetcode2026.Tests
         {
             int[][] squares = Helper.GetMultiDimensionalArrayBasedOnString("[[0,0,2],[1,1,1]]");
 
-            var k = january.SeparateSquares(squares);
+            var k = january.SeparateSquaresI(squares);
 
             Assert.That(k, Is.EqualTo(1.16667));
         }
@@ -62,7 +130,7 @@ namespace Leetcode2026.Tests
         {
             int[][] squares = Helper.GetMultiDimensionalArrayBasedOnString("[[26,28,2],[16,23,2]]");
 
-            var k = january.SeparateSquares(squares);
+            var k = january.SeparateSquaresI(squares);
 
             Assert.That(k, Is.EqualTo(25.00000));
         }
@@ -72,7 +140,7 @@ namespace Leetcode2026.Tests
         {
             int[][] squares = Helper.GetMultiDimensionalArrayBasedOnString("[[522261215,954313664,225462],[628661372,718610752,10667],[619734768,941310679,44788],[352367502,656774918,289036],[860247066,905800565,100123],[817623994,962847576,71460],[691552058,782740602,36271],[911356,152015365,513881],[462847044,859151855,233567],[672324240,954509294,685569]]");
 
-            var k = january.SeparateSquares(squares);
+            var k = january.SeparateSquaresI(squares);
 
             Assert.That(k, Is.EqualTo(954521423.80202));
         }

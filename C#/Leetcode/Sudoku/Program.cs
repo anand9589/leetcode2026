@@ -2,7 +2,7 @@
 
 using System.Text;
 //fillBox();
-//string fileName = @"C:\Users\anand\Downloads\play\639036710242318728";// fillBox();
+//string fileName = @"C:\Users\anand\Downloads\play\3.txt";// fillBox();
 string fileName = fillBox();
 int[][] board = solve(fileName);
 
@@ -35,18 +35,27 @@ static int[][] solve(string fileName)
         {
             if (board[row][col] == 0)
             {
-                readFromBox(board, row, col, tempFields[row][col]);
-                if (tempFields.Count() > 1)
+                if (tempFields[row][col].Count() > 1)
+                {
+                    readFromBox(board, row, col, tempFields[row][col]);
+                }
+                if (tempFields[row][col].Count() > 1)
                 {
                     readFromRow(board, row, tempFields[row][col]);
                 }
-                if (tempFields.Count() > 1)
+                if (tempFields[row][col].Count() > 1)
                 {
                     readFromCol(board, col, tempFields[row][col]);
                 }
                 if (tempFields[row][col].Count == 1)
                 {
                     updateTheTempFields(board, tempFields, row, col, tempFields[row][col].First());
+                }
+                else
+                {
+                    //Console.WriteLine($"[{row},{col}] : {string.Join(',', tempFields[row][col])}");
+                    //Console.ReadKey();
+
                 }
             }
         }
@@ -63,18 +72,27 @@ static int[][] solve(string fileName)
             {
                 if (board[row][col] == 0)
                 {
-                    readFromBox(board, row, col, tempFields[row][col]);
-                    if (tempFields.Count() > 1)
+                    if (tempFields[row][col].Count() > 1)
+                    {
+                        readFromBox(board, row, col, tempFields[row][col]);
+                    }
+                    if (tempFields[row][col].Count() > 1)
                     {
                         readFromRow(board, row, tempFields[row][col]);
                     }
-                    if (tempFields.Count() > 1)
+                    if (tempFields[row][col].Count() > 1)
                     {
                         readFromCol(board, col, tempFields[row][col]);
                     }
                     if (tempFields[row][col].Count == 1)
                     {
                         updateTheTempFields(board, tempFields, row, col, tempFields[row][col].First());
+                    }
+                    else
+                    {
+                        //Console.WriteLine($"[{row},{col}] :  {string.Join(',', tempFields[row][col])}");
+
+                        //Console.ReadKey();
                     }
                     checkUniques(board, tempFields, row, col);
                 }
@@ -93,25 +111,196 @@ static int[][] solve(string fileName)
             }
             if (doItagain) break;
         }
+
+        if (doItagain)
+        {
+            matchTempFields(board, tempFields);
+        }
     }
+    StringBuilder stringBuilder = new StringBuilder();
     for (int row = 0; row < 9; row++)
     {
-        for (int col = 0; col < board[row].Length; col++)
+        stringBuilder.Append(string.Join("   ", board[row]));
+        stringBuilder.AppendLine();
+        stringBuilder.AppendLine();
+    }
+    File.WriteAllText(fileName + "solved", stringBuilder.ToString());
+    return board;
+}
+
+static void matchTempFields(int[][] board, HashSet<int>[][] tempFields)
+{
+    for (int i = 0; i < 9; i++)
+    {
+        matchBox(board, tempFields, i);
+        matchRow(board, tempFields, i);
+        matchCol(board, tempFields, i);
+    }
+}
+
+static void matchCol(int[][] board, HashSet<int>[][] tempFields, int col)
+{
+    List<int[]> temp = new List<int[]>();
+    (int r, int c)[] track = new (int r, int c)[9];
+    for (int row = 0; row < 9; row++)
+    {
+        if (tempFields[row][col].Count > 1)
         {
-            Console.WriteLine($"[{row},{col}] : Available : {string.Join(' ', tempFields[row][col])}   AND Filled : {board[row][col]}");
+            track[row] = (row, col);
+            temp.Add(tempFields[row][col].ToArray());
+        }
+        else
+        {
+            track[row] = (-1, -1);
+        }
+    }
+    MatchElements(board, tempFields, temp, track);
+}
+
+static void matchRow(int[][] board, HashSet<int>[][] tempFields, int row)
+{
+    List<int[]> temp = new List<int[]>();
+    (int r, int c)[] track = new (int r, int c)[9];
+    for (int col = 0; col < 9; col++)
+    {
+        if (tempFields[row][col].Count > 1)
+        {
+            track[col] = (row, col);
+            temp.Add(tempFields[row][col].ToArray());
+        }
+        else
+        {
+            track[col] = (-1, -1);
+        }
+    }
+    MatchElements(board, tempFields, temp, track);
+
+}
+
+static void matchBox(int[][] board, HashSet<int>[][] tempFields, int box)
+{
+    int currRow = box <= 2 ? 0 : box <= 5 ? 3 : 5;
+    int m = box % 3;
+    int currCol = m == 0 ? 0 : m == 1 ? 3 : 6;
+
+    List<int[]> temp = new List<int[]>();
+    (int r, int c)[] track = new (int r, int c)[9];
+    int counter = 0;
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            if (tempFields[currRow + i][currCol + j].Count > 1)
+            {
+                track[counter] = (currRow + i, currCol + j);
+                temp.Add(tempFields[currRow + i][currCol + j].ToArray());
+            }
+            else
+            {
+                track[counter] = (-1, -1);
+            }
+            counter++;
         }
     }
 
-    return board;
+    MatchElements(board, tempFields, temp, track);
+
+}
+
+static void MatchElements(int[][] board, HashSet<int>[][] tempFields, List<int[]> temp, (int r, int c)[] track)
+{
+    var res = findGroupedElements(temp);
+    if (res != null)
+    {
+        int counter = 0;
+
+        for (int i = 0; i < temp.Count; i++)
+        {
+            if (!res.Indices.Contains(i))
+            {
+                List<int> newList = temp[i].ToList();
+                foreach (var item in res.Elements)
+                {
+                    newList.Remove(item);
+                }
+                temp[i] = newList.ToArray();
+            }
+        }
+
+        int currIndex = 0;
+
+        for (int i = 0; i < 9 && currIndex < temp.Count; i++)
+        {
+            if (track[i].r == -1 || track[i].c == -1) continue;
+
+            tempFields[track[i].r][track[i].c] = new HashSet<int>(temp[currIndex]);
+            //if (temp[currIndex].Count() == 1)
+            //{
+            //    updateTheTempFields(board, tempFields, track[i].r, track[i].c, temp[currIndex].First());
+            //}
+            currIndex++;
+
+            //Console.WriteLine($"[{track[i].r},{track[i].c}] : {string.Join(',', tempFields[track[i].r][track[i].c])}");
+        }
+
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                if (tempFields[i][j].Count == 1)
+                {
+                    updateTheTempFields(board, tempFields, i, j, tempFields[i][j].First());
+                }
+            }
+        }
+    }
+
+}
+
+static NakedGroup FindNakedGroup(List<int[]> source, int groupSize)
+{
+    var indices = Enumerable.Range(0, source.Count).ToList();
+
+    // Check all combinations of 'groupSize' arrays
+    foreach (var combo in GetCombinations(indices, groupSize))
+    {
+        // The key logic: Union all elements in this specific combination
+        var union = combo.SelectMany(idx => source[idx]).Distinct().ToArray();
+
+        // If Count of unique elements == Count of arrays, it's a naked group
+        if (union.Length == groupSize)
+        {
+            return new NakedGroup { Indices = combo.ToArray(), Elements = union };
+        }
+    }
+    return null;
+}
+static NakedGroup findGroupedElements(List<int[]> arrays)
+{
+    for (int x = 2; x < arrays.Count; x++)
+    {
+        var result = FindNakedGroup(arrays, x);
+        if (result != null)
+        {
+            return result;
+        }
+    }
+    return null;
+}
+static IEnumerable<IEnumerable<T>> GetCombinations<T>(IEnumerable<T> list, int length)
+{
+    if (length == 1) return list.Select(t => new T[] { t });
+    return list.SelectMany((t, i) =>
+        GetCombinations(list.Skip(i + 1), length - 1).Select(c => (new T[] { t }).Concat(c)));
 }
 
 static void updateTheTempFields(int[][] board, HashSet<int>[][] tempFields, int row, int col, int valToRemove)
 {
-    Console.WriteLine($"[{row},{col}] : {valToRemove}");
+    //Console.WriteLine($"[{row},{col}] : {valToRemove}");
 
     board[row][col] = valToRemove;
-    Console.ReadKey();
-    Console.WriteLine();
+    //Console.ReadKey();
+    //Console.WriteLine();
     tempFields[row][col].Clear();
     updateTheBoxTempFields(board, tempFields, row, col);
     updateTheRowTempFields(board, tempFields, row, board[row][col]);
@@ -362,5 +551,10 @@ static string fillBox()
     string fullFileName = dir + @"\" + fileName;
     File.WriteAllText(fullFileName, stringBuilder.ToString());
     return fullFileName;
+}
+public class NakedGroup
+{
+    public int[] Indices { get; set; }
+    public int[] Elements { get; set; }
 }
 

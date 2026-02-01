@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\..\..\leetcode
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sudoku", "Sudoku\Sudoku.csproj", "{D402D92B-3D11-4CC6-9FCA-9B54180FF5B5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "WpfApp1\WpfApp1.csproj", "{877D1060-FBAD-48C9-A347-E88386E43D6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{D402D92B-3D11-4CC6-9FCA-9B54180FF5B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D402D92B-3D11-4CC6-9FCA-9B54180FF5B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D402D92B-3D11-4CC6-9FCA-9B54180FF5B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{877D1060-FBAD-48C9-A347-E88386E43D6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{877D1060-FBAD-48C9-A347-E88386E43D6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{877D1060-FBAD-48C9-A347-E88386E43D6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{877D1060-FBAD-48C9-A347-E88386E43D6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
