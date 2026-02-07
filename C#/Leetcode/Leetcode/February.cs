@@ -1,6 +1,6 @@
 ﻿namespace Leetcode
 {
-    internal class February
+    public class February
     {
         #region x -->
         #endregion
@@ -39,6 +39,58 @@
         }
         #endregion
 
+        #region 6 --> 3634. Minimum Removals to Balance Array
+        public int MinRemoval(int[] nums, int k)
+        {
+            if (nums.Length == 1) return 0;
+            int result = int.MaxValue;
+            Array.Sort(nums);
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (i >= result) break;
+                int min = nums[i];
+
+                long max = (long)min * (long)k;
+
+                if(max > int.MaxValue)
+                {
+                    result = Math.Min(result, i);
+                    continue;
+                }
+
+                int index = MinRemovalBinarySearch(nums, i + 1, (int)max);
+
+                if (index > i)
+                {
+                    int curRem =  nums.Length -( index - i);
+                    result = Math.Min(result, curRem);
+                }
+            }
+            return result;
+        }
+
+        public int MinRemovalBinarySearch(int[] nums, int low, int max)
+        {
+            int high = nums.Length - 1;
+
+            while (low <= high)
+            {
+                int mid = (low + high) / 2;
+
+                if (nums[mid] <= max)
+                {
+                    low = mid + 1;
+                }
+                else
+                {
+                    high = mid - 1;
+                }
+            }
+            return low;
+        }
+        #endregion
+
         #region 7 --> 1653. Minimum Deletions to Make String Balanced
         public int MinimumDeletions(string s)
         {
@@ -49,7 +101,7 @@
                 {
                     b++;
                 }
-                else if(b>0)
+                else if (b > 0)
                 {
                     d++;
                     b--;
