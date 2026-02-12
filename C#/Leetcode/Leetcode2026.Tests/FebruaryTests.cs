@@ -18,6 +18,17 @@ public class FebruaryTests
         Assert.Pass();
     }
 
+
+    [Test]
+    public void IsBalancedTest1()
+    {
+        TreeNode treeNode = Helper.GetTreeNode("[1,2,2,3,3,null,null,4,4]");
+
+        var k = feb.IsBalanced(treeNode);
+
+        Assert.IsFalse(k);
+    }
+
     [Test]
     public void MinRemovalTest()
     {

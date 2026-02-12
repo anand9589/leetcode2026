@@ -1154,32 +1154,89 @@ namespace Leetcode
         #endregion
 
         #region 2976. Minimum Cost to Convert String I
-        int[][] costSheet;
+        long[][] costSheet;
         public long MinimumCost(string source, string target, char[] original, char[] changed, int[] cost)
         {
             long[] costs = new long[cost.Length];
 
-            costSheet = new int[26][];
+            costSheet = new long[26][];
             for (int i = 0; i < 26; i++)
             {
-                costSheet[i] = new int[26];
+                costSheet[i] = new long[26];
             }
 
             for (int i = 0; i < original.Length; i++)
             {
-                int origindalIndex = original[i]-'a';
-                int changedIndex = changed[i]-'a';
+                int origindalIndex = original[i] - 'a';
+                int changedIndex = changed[i] - 'a';
 
                 costSheet[origindalIndex][changedIndex] = cost[i];
-                
+
             }
+
+            minimizeThCostSheet();
 
             for (int i = 0; i < source.Length; i++)
             {
-                costs[i] = getCost(source[i], target[i], original, changed, cost, 0);
+                //costs[i] = getCost(source[i], target[i], original, changed, cost, 0);
+                if (source[i] == target[i]) continue;
+
+                int sourceIndex = source[i] - 'a';
+                int targetIndex = target[i] - 'a';
+
+                if (costSheet[sourceIndex][targetIndex] == 0) return -1;
+
+                costs[i] = costSheet[sourceIndex][targetIndex];
             }
 
             return costs.Sum();
+        }
+
+        private void minimizeThCostSheet()
+        {
+            PriorityQueue < (int x, int y, long c), long> priorityQueue = new PriorityQueue<(int, int, long), long>();
+            for (int i = 0; i < 26; i++)
+            {
+
+                for (int j = 0; j < 26; j++)
+                {
+                    if (costSheet[i][j] > 0)
+                    {
+                        priorityQueue.Enqueue((i, j, costSheet[i][j]), costSheet[i][j]);
+                    }
+                }
+
+            }
+
+            while (priorityQueue.Count > 0)
+            {
+                var dq = priorityQueue.Dequeue();
+
+                if (costSheet[dq.x][dq.y] < dq.c) continue;
+
+                for (int i = 0; i < 26; i++)
+                {
+                    if (i == dq.y || i == dq.x) continue;
+                    if (costSheet[dq.y][i] > 0)
+                    {
+                        long currCost = dq.c;
+
+                        long newCost = currCost + costSheet[dq.y][i];
+
+                        if (costSheet[dq.x][i] == 0 || costSheet[dq.x][i] > newCost)
+                        {
+                            priorityQueue.Enqueue((dq.x, i, newCost), newCost);
+                            costSheet[dq.x][i] = newCost;
+                        }
+
+                    }
+                }
+            }
+        }
+
+        private void dfsCost(int i, int j)
+        {
+
         }
 
         private long getCost(char source, char target, char[] original, char[] changed, int[] cost, int currCost)
