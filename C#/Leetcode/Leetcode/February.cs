@@ -281,5 +281,49 @@ namespace Leetcode
             return true;
         }
         #endregion
+        #region 15 --> 67. Add Binary
+        public string AddBinary(string a, string b)
+        {
+            List<char> list = new List<char>();
+            int carryOn = 0;
+
+            int alen = a.Length - 1;
+            int blen = b.Length - 1;
+
+            while (alen >= 0 || blen >= 0)
+            {
+                int num1 = alen >= 0 ? a[alen] - '0' : 0;
+                int num2 = blen >= 0 ? b[blen] - '0' : 0;
+
+                int res = num1 + num2 + carryOn;
+
+                if (res < 2)
+                {
+                    list.Add((char)(res + (int)'0'));
+                    carryOn = 0;
+                }
+                else
+                {
+                    if (res == 2)
+                    {
+                        list.Add('0');
+                    }
+                    else
+                    {
+                        list.Add('1');
+                    }
+                    carryOn = 1;
+                }
+
+                alen--;
+                blen--;
+            }
+            if (carryOn == 1)
+            {
+                list.Add('1');
+            }
+            return new string(list.ToArray().Reverse().ToArray());
+        }
+        #endregion
     }
 }
