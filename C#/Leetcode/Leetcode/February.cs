@@ -439,6 +439,62 @@ namespace Leetcode
         }
         #endregion
 
+        #region 24 --> 1022. Sum of Root To Leaf Binary Numbers
+        int currSum = 0;
+
+        public int SumRootToLeaf(TreeNode root)
+        {
+
+            SumRootToLeaf_helper(root, "");
+
+
+
+            return currSum;
+
+        }
+
+        private void SumRootToLeaf_helper(TreeNode root, string s)
+        {
+            if (root == null) return;
+            s += root.val;
+            if (root.left == null && root.right == null)
+            {
+                currSum += Convert.ToInt32(s, 2);
+                return;
+            }
+
+            SumRootToLeaf_helper(root.left, s);
+            SumRootToLeaf_helper(root.right, s);
+        }
+
+        public int SumRootToLeaf1(TreeNode root)
+        {
+            List<int> nums = new List<int>();
+
+            SumRootToLeaf_helper1(root, "", nums);
+
+
+
+
+            return nums.Sum();
+
+        }
+
+        private void SumRootToLeaf_helper1(TreeNode root, string s, List<int> nums)
+        {
+            if(root == null) return;
+            s += root.val;
+            if (root.left == null && root.right == null)
+            {
+                nums.Add(Convert.ToInt32(s,2));
+                return;
+            }
+
+            SumRootToLeaf_helper1(root.left, s,nums);
+            SumRootToLeaf_helper1(root.right, s, nums);
+        }
+        #endregion
+
         #region 25 --> 1356. Sort Integers by The Number of 1 Bits
         public int[] SortByBits(int[] arr)
         {
