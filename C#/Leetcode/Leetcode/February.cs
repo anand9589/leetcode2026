@@ -208,7 +208,6 @@ namespace Leetcode
         }
         #endregion
 
-
         #region 12 --> 3713. Longest Balanced Substring I
         public int LongestBalanced(string s)
         {
@@ -328,7 +327,6 @@ namespace Leetcode
         }
         #endregion
 
-
         #region 21 --> 762. Prime Number of Set Bits in Binary Representation
         public int CountPrimeSetBits(int left, int right)
         {
@@ -338,14 +336,14 @@ namespace Leetcode
 
             for (int i = left; i <= right; i++)
             {
-                int bits = countBits(i);
+                int bits = countBits762(i);
                 if (primes.Contains(bits)) { result++; }
             }
 
             return result;
         }
 
-        private int countBits(int n)
+        private int countBits762(int n)
         {
             int counter = 0;
             while (n > 0)
@@ -360,8 +358,6 @@ namespace Leetcode
 
 
         #endregion
-
-
 
         #region 23 --> 1461. Check If a String Contains All Binary Codes of Size K
 
@@ -441,6 +437,66 @@ namespace Leetcode
             }
             return true;
         }
+        #endregion
+
+        #region 25 --> 1356. Sort Integers by The Number of 1 Bits
+        public int[] SortByBits(int[] arr)
+        {
+            Array.Sort(arr, (a, b) =>
+            {
+                int aCount = countBits(a);
+                int bCount = countBits(b);
+
+                if (aCount == bCount) return a - b;
+
+                return aCount - bCount;
+
+            });
+            return arr;
+        }
+
+        private int countBits(int n)
+        {
+            int counter = 0;
+            while (n > 0)
+            {
+                int bit = n & 1;
+                counter += bit;
+                n >>= 1;
+            }
+            return counter;
+        }
+        public int[] SortByBits1(int[] arr)
+        {
+            Array.Sort(arr, new BitSort());
+            return arr;
+        }
+
+        internal class BitSort : IComparer<int>
+        {
+            public int Compare(int x, int y)
+            {
+                int c = countBits(x).CompareTo(countBits(y));
+
+                if (c == 0) return x.CompareTo(y);
+
+                return c;
+            }
+
+            private int countBits(int n)
+            {
+                int counter = 0;
+                while (n > 0)
+                {
+                    int bit = n & 1;
+                    counter += bit;
+                    n >>= 1;
+                }
+                return counter;
+            }
+        }
+
+
         #endregion
 
         #region x --> 729. My Calendar I
